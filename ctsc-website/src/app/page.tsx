@@ -18,16 +18,22 @@ export default function Home() {
               CTSC 2026
             </motion.div>
             <div className="hidden md:flex space-x-8">
-              {['About', 'Schedule', 'Speakers', 'Register', 'Contact'].map((item, index) => (
+              {[
+                { name: 'About', href: '/about' },
+                { name: 'Schedule', href: '/schedule' },
+                { name: 'Speakers', href: '/speakers' },
+                { name: 'Register', href: '/register' },
+                { name: 'Contact', href: '/contact' }
+              ].map((item, index) => (
                 <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+                  key={item.name}
+                  href={item.href}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className="text-gray-300 hover:text-blue-400 transition-colors duration-300"
                 >
-                  {item}
+                  {item.name}
                 </motion.a>
               ))}
             </div>
@@ -90,12 +96,18 @@ export default function Home() {
               transition={{ delay: 0.9, duration: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+              <a
+                href="/register"
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-center"
+              >
                 Register Now
-              </button>
-              <button className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300">
+              </a>
+              <a
+                href="/about"
+                className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 text-center"
+              >
                 Learn More
-              </button>
+              </a>
             </motion.div>
           </motion.div>
         </div>
