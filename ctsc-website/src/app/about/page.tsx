@@ -114,8 +114,8 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-white mb-6">Conference Theme</h3>
               <blockquote className="text-lg text-gray-300 italic mb-6 leading-relaxed">
-                "Exploration of innovative solutions and methodologies in Technical Surveillance 
-                Countermeasures (TSCM) and CYBER threat detection"
+                &ldquo;Exploration of innovative solutions and methodologies in Technical Surveillance 
+                Countermeasures (TSCM) and CYBER threat detection&rdquo;
               </blockquote>
               
               <div className="space-y-4">
