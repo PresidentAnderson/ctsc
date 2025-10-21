@@ -2,12 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Building, Clock, User, MessageSquare, CheckCircle, Users, Calendar } from 'lucide-react';
+import { Phone, Mail, MapPin, Building, Clock, User, MessageSquare, CheckCircle, Users, Calendar, Send, Globe } from 'lucide-react';
 
 export default function Contact() {
-  const [activeForm, setActiveForm] = useState('general');
   const [formData, setFormData] = useState({
-    // General Inquiry
     name: '',
     email: '',
     phone: '',
@@ -15,27 +13,8 @@ export default function Contact() {
     subject: '',
     message: '',
     inquiryType: '',
-    
-    // Sponsorship
-    companyName: '',
-    contactPerson: '',
-    sponsorshipLevel: '',
-    budget: '',
-    goals: '',
-    
-    // Speaking
-    speakerName: '',
-    speakerTitle: '',
-    speakerOrg: '',
-    speakerBio: '',
-    presentationTitle: '',
-    presentationAbstract: '',
-    
-    // Media
-    mediaOutlet: '',
-    deadline: '',
-    mediaType: '',
-    
+    quickEmail: '',
+    quickInterest: '',
     consent: false
   });
 
@@ -45,28 +24,43 @@ export default function Contact() {
   const contactInfo = [
     {
       icon: Phone,
-      label: "Toll-free",
+      label: "Conference Hotline",
       value: "1.888.293.7384",
-      description: "Main conference line"
+      description: "Registration & General Inquiries",
+      hours: "Mon-Fri 9AM-6PM EST"
     },
     {
-      icon: Phone,
-      label: "Toronto",
-      value: "+1 647.293.7384",
-      description: "Eastern region"
+      icon: Mail,
+      label: "Email Support",
+      value: "info@ctsc-canada.com",
+      description: "General Questions & Support",
+      hours: "24-48 hour response"
     },
     {
-      icon: Phone,
-      label: "Calgary",
-      value: "+1 403.812.0737",
-      description: "Western region"
+      icon: Building,
+      label: "Sponsorship",
+      value: "sponsors@ctsc-canada.com",
+      description: "Partnership Opportunities",
+      hours: "Priority response"
     },
     {
-      icon: Phone,
-      label: "Ottawa",
-      value: "+1 613.903.7577",
-      description: "Central region"
+      icon: User,
+      label: "Speaker Program",
+      value: "speakers@ctsc-canada.com",
+      description: "Speaking Opportunities",
+      hours: "Review within 72 hours"
     }
+  ];
+
+  const quickInterests = [
+    'Conference Registration',
+    'Sponsorship Opportunities', 
+    'Speaking at CTSC',
+    'Media & Press',
+    'Partnership Inquiries',
+    'Vendor Exhibitions',
+    'Group Discounts',
+    'Technical Sessions Info'
   ];
 
   const inquiryTypes = [
@@ -76,15 +70,9 @@ export default function Contact() {
     { value: 'sponsorship', label: 'Sponsorship Opportunities' },
     { value: 'speaking', label: 'Speaking Opportunities' },
     { value: 'media', label: 'Media & Press' },
+    { value: 'vendor', label: 'Vendor Exhibitions' },
+    { value: 'group', label: 'Group Registration' },
     { value: 'general', label: 'General Information' }
-  ];
-
-  const sponsorshipLevels = [
-    { value: 'platinum', label: 'Platinum Sponsor ($25,000+)', description: 'Premier branding and speaking opportunities' },
-    { value: 'gold', label: 'Gold Sponsor ($15,000+)', description: 'Premium exhibit space and networking' },
-    { value: 'silver', label: 'Silver Sponsor ($10,000+)', description: 'Standard exhibit and materials inclusion' },
-    { value: 'bronze', label: 'Bronze Sponsor ($5,000+)', description: 'Logo placement and conference materials' },
-    { value: 'custom', label: 'Custom Package', description: 'Let\'s discuss your specific needs' }
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -111,9 +99,7 @@ export default function Contact() {
   const resetForm = () => {
     setFormData({
       name: '', email: '', phone: '', organization: '', subject: '', message: '', inquiryType: '',
-      companyName: '', contactPerson: '', sponsorshipLevel: '', budget: '', goals: '',
-      speakerName: '', speakerTitle: '', speakerOrg: '', speakerBio: '', presentationTitle: '', presentationAbstract: '',
-      mediaOutlet: '', deadline: '', mediaType: '', consent: false
+      quickEmail: '', quickInterest: '', consent: false
     });
     setIsSubmitted(false);
   };
@@ -133,7 +119,7 @@ export default function Contact() {
             Thank you for contacting CTSC 2026. We've received your inquiry and will respond within 24 hours.
           </p>
           <p className="text-lg text-gray-300 mb-8">
-            A confirmation has been sent to {formData.email}.
+            A confirmation has been sent to {formData.email || formData.quickEmail}.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -144,7 +130,7 @@ export default function Contact() {
             </button>
             <a
               href="/"
-              className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300"
+              className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 text-center"
             >
               Return to Home
             </a>
@@ -207,11 +193,11 @@ export default function Contact() {
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Contact Us
+                Contact CTSC 2026
               </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Have questions about CTSC 2026? We're here to help with registration, sponsorships, speaking opportunities, and more.
+              Questions about registration, sponsorships, speaking opportunities? We're here to help make your CTSC 2026 experience exceptional.
             </p>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
@@ -229,6 +215,83 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* Quick Contact Form */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/20"
+          >
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-4">Get Conference Updates</h2>
+              <p className="text-xl text-gray-300">
+                Stay informed about CTSC 2026 registration, speakers, and exclusive opportunities
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-gray-300 mb-2">Email Address *</label>
+                  <input
+                    type="email"
+                    name="quickEmail"
+                    value={formData.quickEmail}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="your.email@company.com"
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Primary Interest *</label>
+                  <select
+                    name="quickInterest"
+                    value={formData.quickInterest}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  >
+                    <option value="">Select your interest</option>
+                    {quickInterests.map(interest => (
+                      <option key={interest} value={interest}>{interest}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3 mb-6">
+                <input
+                  type="checkbox"
+                  name="consent"
+                  checked={formData.consent}
+                  onChange={handleInputChange}
+                  required
+                  className="w-5 h-5 text-blue-600 bg-slate-700 border-gray-600 rounded focus:ring-blue-500"
+                />
+                <label className="text-gray-300 text-sm">
+                  I agree to receive updates about CTSC 2026 and related technical security events. Unsubscribe anytime. *
+                </label>
+              </div>
+              
+              <div className="text-center">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto transform hover:scale-105"
+                >
+                  <Send className="w-5 h-5 mr-2" />
+                  {isSubmitting ? 'Subscribing...' : 'Stay Updated'}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Contact Information */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -240,7 +303,7 @@ export default function Contact() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl font-bold text-white mb-6">Get in Touch</h2>
-            <p className="text-xl text-gray-300">Multiple ways to reach our team</p>
+            <p className="text-xl text-gray-300">Multiple ways to reach our team for different needs</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
@@ -256,7 +319,8 @@ export default function Contact() {
                 <contact.icon className="w-8 h-8 text-blue-400 mx-auto mb-3" />
                 <h3 className="text-white font-semibold mb-1">{contact.label}</h3>
                 <p className="text-blue-400 font-medium mb-1">{contact.value}</p>
-                <p className="text-gray-400 text-sm">{contact.description}</p>
+                <p className="text-gray-400 text-sm mb-1">{contact.description}</p>
+                <p className="text-gray-500 text-xs">{contact.hours}</p>
               </motion.div>
             ))}
           </div>
@@ -280,14 +344,14 @@ export default function Contact() {
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4" />
-                <span>Mon-Fri 9AM-5PM EST</span>
+                <span>Mon-Fri 9AM-6PM EST</span>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Form */}
+      {/* Detailed Contact Form */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -297,419 +361,122 @@ export default function Contact() {
             viewport={{ once: true }}
             className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/20"
           >
-            <h3 className="text-3xl font-bold text-white mb-8 text-center">Send us a Message</h3>
-            
-            {/* Form Type Selector */}
-            <div className="mb-8">
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {[
-                  { id: 'general', label: 'General Inquiry', icon: MessageSquare },
-                  { id: 'sponsorship', label: 'Sponsorship', icon: Building },
-                  { id: 'speaking', label: 'Speaking', icon: User },
-                  { id: 'media', label: 'Media', icon: Users }
-                ].map((type) => (
-                  <button
-                    key={type.id}
-                    onClick={() => setActiveForm(type.id)}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
-                      activeForm === type.id
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
-                    }`}
-                  >
-                    <type.icon className="w-4 h-4" />
-                    <span>{type.label}</span>
-                  </button>
-                ))}
-              </div>
+            <div className="text-center mb-8">
+              <h3 className="text-3xl font-bold text-white mb-4">Send us a Detailed Message</h3>
+              <p className="text-lg text-gray-300">
+                Have specific questions or need detailed information? Use this form to get personalized assistance.
+              </p>
             </div>
 
-            <form onSubmit={handleSubmit}>
-              {/* General Inquiry Form */}
-              {activeForm === 'general' && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-6"
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-300 mb-2">Full Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Email Address *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Organization</label>
+                  <input
+                    type="text"
+                    name="organization"
+                    value={formData.organization}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2">How can we help you? *</label>
+                <select
+                  name="inquiryType"
+                  value={formData.inquiryType}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
                 >
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-gray-300 mb-2">Full Name *</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Organization</label>
-                      <input
-                        type="text"
-                        name="organization"
-                        value={formData.organization}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Inquiry Type</label>
-                    <select
-                      name="inquiryType"
-                      value={formData.inquiryType}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    >
-                      <option value="">Select inquiry type</option>
-                      {inquiryTypes.map(type => (
-                        <option key={type.value} value={type.value}>{type.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Subject *</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Message *</label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={6}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      placeholder="Please provide details about your inquiry..."
-                    />
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Sponsorship Form */}
-              {activeForm === 'sponsorship' && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-6"
-                >
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-gray-300 mb-2">Company Name *</label>
-                      <input
-                        type="text"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Contact Person *</label>
-                      <input
-                        type="text"
-                        name="contactPerson"
-                        value={formData.contactPerson}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Sponsorship Level of Interest</label>
-                    <select
-                      name="sponsorshipLevel"
-                      value={formData.sponsorshipLevel}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    >
-                      <option value="">Select sponsorship level</option>
-                      {sponsorshipLevels.map(level => (
-                        <option key={level.value} value={level.value}>{level.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Budget Range</label>
-                    <input
-                      type="text"
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleInputChange}
-                      placeholder="e.g., $10,000 - $25,000"
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Sponsorship Goals & Objectives</label>
-                    <textarea
-                      name="goals"
-                      value={formData.goals}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      placeholder="What are your goals for sponsoring CTSC 2026? (brand awareness, lead generation, thought leadership, etc.)"
-                    />
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Speaking Proposal Form */}
-              {activeForm === 'speaking' && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-6"
-                >
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-gray-300 mb-2">Speaker Name *</label>
-                      <input
-                        type="text"
-                        name="speakerName"
-                        value={formData.speakerName}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Title/Position *</label>
-                      <input
-                        type="text"
-                        name="speakerTitle"
-                        value={formData.speakerTitle}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Organization *</label>
-                      <input
-                        type="text"
-                        name="speakerOrg"
-                        value={formData.speakerOrg}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Speaker Biography *</label>
-                    <textarea
-                      name="speakerBio"
-                      value={formData.speakerBio}
-                      onChange={handleInputChange}
-                      required
-                      rows={4}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      placeholder="Brief professional biography including relevant experience and expertise..."
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Presentation Title *</label>
-                    <input
-                      type="text"
-                      name="presentationTitle"
-                      value={formData.presentationTitle}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Presentation Abstract *</label>
-                    <textarea
-                      name="presentationAbstract"
-                      value={formData.presentationAbstract}
-                      onChange={handleInputChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      placeholder="Detailed description of your presentation including key takeaways and relevance to technical security..."
-                    />
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Media Inquiry Form */}
-              {activeForm === 'media' && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-6"
-                >
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-gray-300 mb-2">Reporter/Journalist Name *</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Media Outlet *</label>
-                      <input
-                        type="text"
-                        name="mediaOutlet"
-                        value={formData.mediaOutlet}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-300 mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Media Type</label>
-                    <select
-                      name="mediaType"
-                      value={formData.mediaType}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    >
-                      <option value="">Select media type</option>
-                      <option value="print">Print Publication</option>
-                      <option value="online">Online/Digital</option>
-                      <option value="broadcast">TV/Radio</option>
-                      <option value="podcast">Podcast</option>
-                      <option value="blog">Blog/Website</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Deadline</label>
-                    <input
-                      type="date"
-                      name="deadline"
-                      value={formData.deadline}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-gray-300 mb-2">Media Inquiry Details *</label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
-                      placeholder="Please describe your story angle, who you'd like to interview, and any specific information needed..."
-                    />
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Consent Checkbox */}
-              <div className="flex items-start space-x-3 mt-6">
+                  <option value="">Select inquiry type</option>
+                  {inquiryTypes.map(type => (
+                    <option key={type.value} value={type.value}>{type.label}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2">Subject *</label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-300 mb-2">Message *</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className="w-full px-4 py-3 rounded-lg bg-slate-700 border border-gray-600 text-white focus:border-blue-400 focus:outline-none"
+                  placeholder="Please provide details about your inquiry, questions about registration, sponsorship opportunities, speaking proposals, or any other conference-related matters..."
+                />
+              </div>
+              
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
+                  <Globe className="w-5 h-5 mr-2 text-blue-400" />
+                  Quick Actions
+                </h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <a
+                    href="/register"
+                    className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-300 text-center block"
+                  >
+                    Register for CTSC 2026
+                  </a>
+                  <a
+                    href="/schedule"
+                    className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white px-4 py-3 rounded-lg font-medium transition-all duration-300 text-center block"
+                  >
+                    View Conference Schedule
+                  </a>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3">
                 <input
                   type="checkbox"
                   name="consent"
@@ -719,16 +486,15 @@ export default function Contact() {
                   className="w-5 h-5 text-blue-600 bg-slate-700 border-gray-600 rounded focus:ring-blue-500 mt-1"
                 />
                 <label className="text-gray-300 text-sm">
-                  I consent to being contacted by CTSC 2026 organizers regarding my inquiry. I understand that my information will be used solely for conference-related communication and will not be shared with third parties without my consent. *
+                  I consent to being contacted by CTSC 2026 organizers regarding my inquiry. My information will be used solely for conference-related communication and will not be shared with third parties. *
                 </label>
               </div>
 
-              {/* Submit Button */}
-              <div className="flex justify-center mt-8">
+              <div className="text-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center transform hover:scale-105"
+                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto transform hover:scale-105"
                 >
                   {isSubmitting ? (
                     <>
@@ -736,7 +502,10 @@ export default function Contact() {
                       Sending Message...
                     </>
                   ) : (
-                    'Send Message'
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </>
                   )}
                 </button>
               </div>
